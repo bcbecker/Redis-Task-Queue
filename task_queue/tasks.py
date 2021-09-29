@@ -5,14 +5,14 @@ Moved to separate file due to issue with rq worker:
 import time
 
 def simulated_task(n):
-    simulated_task_delay = 2 
+    simulated_task_delay = 3 
 
     print("Task running")
-    print(f'Delay: {simulated_task_delay}')
+    print(f'Delay: {simulated_task_delay} seconds')
 
     time.sleep(simulated_task_delay)
 
-    print(len(n))
+    print(n)
     print("Task complete")
 
-    return len(n)
+    return n
