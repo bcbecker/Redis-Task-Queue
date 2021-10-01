@@ -3,16 +3,16 @@ Moved to separate file due to issue with rq worker:
 'ValueError: Functions from the _main_ module cannot be processed by workers'
 """
 import time
+from rq import get_current_job
 
-def simulated_task(n):
-    simulated_task_delay = 3 
-
-    print("Task running")
-    print(f'Delay: {simulated_task_delay} seconds')
-
-    time.sleep(simulated_task_delay)
-
-    print(n)
-    print("Task complete")
-
-    return n
+def simulated_task(seconds):
+    job = get_current_job()
+    print('Starting task')
+    for i in range(seconds):
+        job.meta['progress'] = 100.0 * (i / seconds)
+        job.save_meta()
+        print(i)
+        time.sleep(1)
+    job.meta['progress'] = 100
+    job.save_meta()
+    print('Task completed')
