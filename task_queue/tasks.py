@@ -1,7 +1,3 @@
-"""
-Moved to separate file due to issue with rq worker:
-'ValueError: Functions from the _main_ module cannot be processed by workers'
-"""
 import time
 from rq import get_current_job
 
