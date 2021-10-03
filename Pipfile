@@ -7,7 +7,7 @@ name = "pypi"
 flask = "*"
 redis = "*"
 rq = "*"
-celery = {extras = ["redis"], version = "*"}
+flask-sqlalchemy = "*"
 
 [dev-packages]
 
