@@ -1,6 +1,8 @@
+from flask import current_app
 from datetime import datetime
 from task_queue import db
 from flask_login import UserMixin
+import redis
 import rq
 
 class Task(db.Model):
@@ -10,8 +12,10 @@ class Task(db.Model):
     complete = db.Column(db.Boolean, default=False)
 
     def get_rq_job(self):
-        rq_job = rq #need to look at docs
-
+        try:
+            rq_job = rq.job.Job.fetch(self.id, connection=current_app.redis)
+        except (redis.exceptions.RedisError, rq.exceptions.NoSuchJobError):
+            return None
         return rq_job
 
     def get_progress(self):
